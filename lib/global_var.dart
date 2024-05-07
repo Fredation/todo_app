@@ -9,5 +9,5 @@ get screenWidth {
 }
 
 get screenHeight {
-  return MediaQuery.of(navigatorKey.currentContext!).size.width;
+  return MediaQuery.of(navigatorKey.currentContext!).size.height;
 }
