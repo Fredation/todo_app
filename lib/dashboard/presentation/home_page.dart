@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             top: 239 + kToolbarHeight,
             left: 0,
             child: Container(
-              height: screenHeight - (239 + kToolbarHeight),
+              height: screenHeight,
               width: screenWidth,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: ListView.separated(
