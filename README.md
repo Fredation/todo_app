@@ -1,6 +1,6 @@
 # todo_app
 
-A new Flutter project.
+A flutter application for test purpose.
 
 ## Getting Started
 
