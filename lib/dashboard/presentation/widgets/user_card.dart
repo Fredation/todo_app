@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/config/app_colors.dart';
 import 'package:todo_app/config/img_assets.dart';
+import 'package:todo_app/global_var.dart';
 
 Positioned userCard(BuildContext context) {
   return Positioned(
@@ -8,7 +9,7 @@ Positioned userCard(BuildContext context) {
     left: 0,
     child: Container(
       height: 123 + kToolbarHeight,
-      width: double.maxFinite,
+      width: screenWidth,
       padding: const EdgeInsets.fromLTRB(32, 19 + kToolbarHeight, 32, 0),
       decoration: const BoxDecoration(
         color: AppColors.primary,
@@ -44,6 +45,7 @@ Positioned userCard(BuildContext context) {
                 "anekefrederick@gmail.com",
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontStyle: FontStyle.italic,
+                  fontSize: 20,
                   shadows: [
                     const Shadow(
                       color: Colors.black,
