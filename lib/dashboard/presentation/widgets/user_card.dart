@@ -9,8 +9,10 @@ Positioned userCard(BuildContext context) {
     child: Container(
       height: 123 + kToolbarHeight,
       width: double.maxFinite,
-      color: AppColors.primary,
-      padding: const EdgeInsets.fromLTRB(32, 19 + kToolbarHeight, 0, 0),
+      padding: const EdgeInsets.fromLTRB(32, 19 + kToolbarHeight, 32, 0),
+      decoration: const BoxDecoration(
+        color: AppColors.primary,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

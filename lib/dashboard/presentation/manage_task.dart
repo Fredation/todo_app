@@ -29,76 +29,85 @@ class _ManageTaskPageState extends State<ManageTaskPage> {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final taskCubit = context.watch<TaskCubit>();
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        title: Text(
-          widget.taskModel == null ? "Add New Task" : "Edit Task",
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: AppColors.white,
-            shadows: [
-              const Shadow(
-                color: Colors.black,
-                blurRadius: 0,
-                offset: Offset(0, 2),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColors.primary,
+          title: Text(
+            widget.taskModel == null ? "Add New Task" : "Edit Task",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: AppColors.white,
+              shadows: [
+                const Shadow(
+                  color: Colors.black,
+                  blurRadius: 0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+          leading: SizedBox(
+            height: 40,
+            width: 40,
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: AppColors.white,
               ),
+            ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Task Name",
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+              ),
+              const SizedBox(height: 15),
+              TodoInputField(controller: controller),
             ],
           ),
         ),
-        leading: SizedBox(
-          height: 40,
-          width: 40,
-          child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColors.white,
-            ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TodoButton(
+                text: "Done",
+                onPressed: () {
+                  if (widget.taskModel == null) {
+                    taskCubit.addTask(
+                        task: controller.text, id: taskCubit.tasks.length + 1);
+                    context.pop();
+                  } else {
+                    taskCubit.editTask(
+                        newTask: controller.text, id: widget.taskModel!.id);
+                    context.pop();
+                  }
+                },
+              ),
+              const SizedBox(height: 40),
+            ],
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Task Name",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-            ),
-            const SizedBox(height: 15),
-            TodoInputField(controller: controller),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TodoButton(
-              text: "Done",
-              onPressed: () {
-                if (widget.taskModel == null) {
-                  taskCubit.addTask(
-                      task: controller.text, id: taskCubit.tasks.length + 1);
-                  context.pop();
-                } else {
-                  taskCubit.editTask(
-                      newTask: controller.text, id: widget.taskModel!.id);
-                  context.pop();
-                }
-              },
-            ),
-            const SizedBox(height: 40),
-          ],
         ),
       ),
     );
